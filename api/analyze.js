@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const prompt = `
 You are a contract risk analysis assistant.
 
-Analyze the agreement and return the answer in clean plain text only.
+Analyze the agreement and return a teaser only in clean plain text.
 
 Rules:
 - Do not use markdown
@@ -21,26 +21,25 @@ Rules:
 - Do not use hash symbols
 - Do not bold anything
 - Keep it clear and easy to read
-- Write in short plain-English sections
+- Do not provide the full review
+- Limit the risks section to 2 items only
+- Do not include a full list of questions
+- End with a short line inviting the user to unlock the full review
 
 Use this exact structure:
 
 Summary in Plain English
 [short summary]
 
-Key Risks
+Top 2 Risks
 - [risk 1]
 - [risk 2]
-- [risk 3]
-- [risk 4]
-
-Questions to Raise Before Signing
-- [question 1]
-- [question 2]
-- [question 3]
 
 Final Risk Rating
 [Low, Medium, or High]
+
+Unlock Message
+Unlock the full review for more risks and questions to raise before signing.
 
 Agreement:
 ${agreement}
