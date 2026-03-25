@@ -38,7 +38,7 @@ Top 2 Risks
 Final Risk Rating
 [Low, Medium, or High]
 
-Unlock Message
+
 Unlock the full review for more risks and questions to raise before signing.
 
 Agreement:
