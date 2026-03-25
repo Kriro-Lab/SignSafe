@@ -4,8 +4,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { agreement } = req.body || {};
-
+    const { agreement, adminCode } = req.body || {};
+const isAdmin = adminCode === process.env.ADMIN_ACCESS_CODE;
     if (!agreement || !agreement.trim()) {
       return res.status(400).json({ error: "Agreement text is required." });
     }
