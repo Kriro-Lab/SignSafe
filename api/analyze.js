@@ -10,7 +10,7 @@ const isAdmin = adminCode === process.env.ADMIN_ACCESS_CODE;
       return res.status(400).json({ error: "Agreement text is required." });
     }
 
-    const prompt = `
+    const teaserPrompt = `
 You are a contract risk analysis assistant.
 
 Analyze the agreement and return a teaser only in clean plain text.
@@ -38,12 +38,49 @@ Top 2 Risks
 Final Risk Rating
 [Low, Medium, or High]
 
-
 Unlock the full review for more risks and questions to raise before signing.
 
 Agreement:
 ${agreement}
 `;
+
+const fullPrompt = `
+You are a contract risk analysis assistant.
+
+Analyze the agreement and return the full review in clean plain text.
+
+Rules:
+- Do not use markdown
+- Do not use asterisks
+- Do not use hash symbols
+- Do not bold anything
+- Keep it clear and easy to read
+- Write in short plain-English sections
+
+Use this exact structure:
+
+Summary in Plain English
+[short summary]
+
+Key Risks
+- [risk 1]
+- [risk 2]
+- [risk 3]
+- [risk 4]
+
+Questions to Raise Before Signing
+- [question 1]
+- [question 2]
+- [question 3]
+
+Final Risk Rating
+[Low, Medium, or High]
+
+Agreement:
+${agreement}
+`;
+
+const prompt = isAdmin ? fullPrompt : teaserPrompt;
 
     const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
