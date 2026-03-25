@@ -13,23 +13,38 @@ export default async function handler(req, res) {
     const prompt = `
 You are a contract risk analysis assistant.
 
-Analyze the following agreement and identify:
+Analyze the agreement and return the answer in clean plain text only.
 
-1. Clauses that create risk for the person signing
-2. Unusual or unfair terms
-3. Payment risks or obligations
-4. Liability issues
-5. Anything that should be questioned before signing
+Rules:
+- Do not use markdown
+- Do not use asterisks
+- Do not use hash symbols
+- Do not bold anything
+- Keep it clear and easy to read
+- Write in short plain-English sections
 
-Then provide:
+Use this exact structure:
 
-- A simple summary in plain English
-- A bullet list of key risks
-- A final risk rating: Low, Medium, or High
+Summary in Plain English
+[short summary]
+
+Key Risks
+- [risk 1]
+- [risk 2]
+- [risk 3]
+- [risk 4]
+
+Questions to Raise Before Signing
+- [question 1]
+- [question 2]
+- [question 3]
+
+Final Risk Rating
+[Low, Medium, or High]
 
 Agreement:
 ${agreement}
-    `;
+`;
 
     const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -42,7 +57,8 @@ ${agreement}
         messages: [
           {
             role: "system",
-            content: "You explain contract risk clearly, briefly, and in plain English."
+            content: "You explain contract risk clearly, briefly, and in plain English. Return plain text only, never markdown."
+            
           },
           {
             role: "user",
