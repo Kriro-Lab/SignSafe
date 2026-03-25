@@ -36,20 +36,6 @@
       margin: 0 auto 35px;
     }
 
-    textarea {
-      width: 100%;
-      max-width: 760px;
-      min-height: 220px;
-      padding: 18px;
-      font-size: 16px;
-      line-height: 1.5;
-      border-radius: 18px;
-      border: none;
-      box-sizing: border-box;
-      resize: vertical;
-      margin-top: 10px;
-    }
-
     .button {
       display: inline-block;
       padding: 18px 32px;
@@ -59,9 +45,6 @@
       border-radius: 999px;
       font-size: 22px;
       font-weight: bold;
-      border: none;
-      cursor: pointer;
-      margin-top: 20px;
     }
 
     .button:hover {
@@ -81,33 +64,6 @@
       color: #555;
       padding: 0 20px;
       box-sizing: border-box;
-    }
-
-    .result-wrap {
-      max-width: 900px;
-      margin: 0 auto 60px;
-      padding: 0 20px;
-      box-sizing: border-box;
-      text-align: left;
-    }
-
-    .result-box {
-      background: white;
-      border-radius: 22px;
-      padding: 24px;
-      box-sizing: border-box;
-      white-space: pre-wrap;
-      line-height: 1.7;
-      display: none;
-    }
-
-    .status {
-      max-width: 900px;
-      margin: 20px auto 0;
-      padding: 0 20px;
-      box-sizing: border-box;
-      text-align: center;
-      color: #555;
     }
 
     @media (max-width: 700px) {
@@ -140,78 +96,17 @@
       in contracts so you understand what you’re agreeing to before you sign.
     </p>
 
-    <textarea
-      id="contractInput"
-      placeholder="Paste your agreement here..."
-    ></textarea>
-
-    <br>
-
-    <button class="button" onclick="analyzeContract()" id="analyzeBtn">
+    <a class="button" href="https://tally.so/r/68xoK5" target="_blank">
       Check My Agreement
-    </button>
+    </a>
 
     <div class="subtext">
       No signup required. Takes less than 60 seconds.
     </div>
   </div>
 
-  <div class="status" id="statusText"></div>
-
-  <div class="result-wrap">
-    <div class="result-box" id="resultBox"></div>
-  </div>
-
   <div class="disclaimer">
     This tool provides general information only and does not constitute legal advice.
   </div>
-
-  <script>
-    async function analyzeContract() {
-      const input = document.getElementById("contractInput");
-      const button = document.getElementById("analyzeBtn");
-      const statusText = document.getElementById("statusText");
-      const resultBox = document.getElementById("resultBox");
-
-      const agreement = input.value.trim();
-
-      if (!agreement) {
-        statusText.textContent = "Paste an agreement first.";
-        resultBox.style.display = "none";
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = "Analyzing...";
-      statusText.textContent = "Reading agreement and preparing report...";
-      resultBox.style.display = "none";
-      resultBox.textContent = "";
-
-      try {
-        const response = await fetch("/api/analyze", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ agreement })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || "Something went wrong.");
-        }
-
-        resultBox.textContent = data.result;
-        resultBox.style.display = "block";
-        statusText.textContent = "";
-      } catch (error) {
-        statusText.textContent = error.message || "Something went wrong.";
-      } finally {
-        button.disabled = false;
-        button.textContent = "Check My Agreement";
-      }
-    }
-  </script>
 </body>
 </html>
