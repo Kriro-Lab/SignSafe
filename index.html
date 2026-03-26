@@ -178,6 +178,12 @@
       const resultBox = document.getElementById("resultBox");
 
       const agreement = input.value.trim();
+      const agreement = input.value.trim();
+
+const params = new URLSearchParams(window.location.search);
+const adminCode = params.get("admin") || "";
+
+if (!agreement) {
 
       if (!agreement) {
         statusText.textContent = "Paste an agreement first.";
@@ -197,7 +203,7 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ agreement })
+          body: JSON.stringify({ agreement, adminCode })
         });
 
         const data = await response.json();
