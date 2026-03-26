@@ -178,18 +178,15 @@
       const resultBox = document.getElementById("resultBox");
 
       const agreement = input.value.trim();
-      const agreement = input.value.trim();
 
 const params = new URLSearchParams(window.location.search);
 const adminCode = params.get("admin") || "";
 
 if (!agreement) {
-
-      if (!agreement) {
-        statusText.textContent = "Paste an agreement first.";
-        resultBox.style.display = "none";
-        return;
-      }
+  statusText.textContent = "Paste an agreement first.";
+  resultBox.style.display = "none";
+  return;
+}
 
       button.disabled = true;
       button.textContent = "Analyzing...";
@@ -203,8 +200,9 @@ if (!agreement) {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ agreement, adminCode })
-        });
+               body: JSON.stringify({ agreement, adminCode })
+    });
+  
 
         const data = await response.json();
 
@@ -219,7 +217,7 @@ if (!agreement) {
         statusText.textContent = error.message || "Something went wrong.";
       } finally {
         button.disabled = false;
-        button.textContent = "Check My Agreement";
+        button.textContent = "Analyze Free";
       }
     }
   </script>
